@@ -3,13 +3,6 @@
 import { cn } from "@/lib/utils";
 import { createClient } from "@/lib/supabase/client";
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import Link from "next/link";
@@ -44,7 +37,7 @@ export function SignUpForm({
         email,
         password,
         options: {
-          emailRedirectTo: `${window.location.origin}/protected`,
+          emailRedirectTo: `${window.location.origin}/`,
         },
       });
       if (error) throw error;
@@ -57,64 +50,82 @@ export function SignUpForm({
   };
 
   return (
-    <div className={cn("flex flex-col gap-6", className)} {...props}>
-      <Card>
-        <CardHeader>
-          <CardTitle className="text-2xl">Sign up</CardTitle>
-          <CardDescription>Create a new account</CardDescription>
-        </CardHeader>
-        <CardContent>
-          <form onSubmit={handleSignUp}>
-            <div className="flex flex-col gap-6">
-              <div className="grid gap-2">
-                <Label htmlFor="email">Email</Label>
-                <Input
-                  id="email"
-                  type="email"
-                  placeholder="m@example.com"
-                  required
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                />
-              </div>
-              <div className="grid gap-2">
-                <div className="flex items-center">
-                  <Label htmlFor="password">Password</Label>
-                </div>
-                <Input
-                  id="password"
-                  type="password"
-                  required
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                />
-              </div>
-              <div className="grid gap-2">
-                <div className="flex items-center">
-                  <Label htmlFor="repeat-password">Repeat Password</Label>
-                </div>
-                <Input
-                  id="repeat-password"
-                  type="password"
-                  required
-                  value={repeatPassword}
-                  onChange={(e) => setRepeatPassword(e.target.value)}
-                />
-              </div>
-              {error && <p className="text-sm text-red-500">{error}</p>}
-              <Button type="submit" className="w-full" disabled={isLoading}>
-                {isLoading ? "Creating an account..." : "Sign up"}
-              </Button>
+    <div className={cn("flex flex-col gap-8", className)} {...props}>
+      <div className="flex flex-col items-center gap-2 mb-4">
+        <Link href="/" className="font-mono font-bold text-2xl tracking-tighter flex items-center gap-2 mb-2">
+          <span className="bg-primary text-primary-foreground px-2 py-1">P</span>
+        </Link>
+        <h1 className="text-2xl font-mono font-bold uppercase tracking-widest text-shadow-industrial">Operator Intake</h1>
+        <p className="text-xs text-muted-foreground font-mono uppercase tracking-tight">System Access Provisioning [P-AI-SEC-02]</p>
+      </div>
+
+      <div className="border border-border bg-card/50 backdrop-blur-sm p-8 relative overflow-hidden">
+        <div className="absolute top-0 left-0 w-full h-1 bg-primary" />
+        <div className="absolute top-0 right-0 p-2 text-[8px] font-mono text-muted-foreground/30 uppercase tracking-[0.2em]">Register // V4</div>
+        
+        <form onSubmit={handleSignUp} className="flex flex-col gap-6">
+          <div className="flex flex-col gap-2">
+            <Label htmlFor="email" className="font-mono text-[10px] uppercase tracking-widest text-primary">Email_Address</Label>
+            <Input
+              id="email"
+              type="email"
+              placeholder="operator@primepolicy.ai"
+              required
+              className="rounded-none border-border bg-background/50 font-sans focus-visible:ring-primary"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          </div>
+          <div className="flex flex-col gap-2">
+            <Label htmlFor="password" className="font-mono text-[10px] uppercase tracking-widest text-primary">Define_Access_Key</Label>
+            <Input
+              id="password"
+              type="password"
+              required
+              className="rounded-none border-border bg-background/50 font-sans focus-visible:ring-primary"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+          </div>
+          <div className="flex flex-col gap-2">
+            <Label htmlFor="repeat-password" className="font-mono text-[10px] uppercase tracking-widest text-primary">Verify_Access_Key</Label>
+            <Input
+              id="repeat-password"
+              type="password"
+              required
+              className="rounded-none border-border bg-background/50 font-sans focus-visible:ring-primary"
+              value={repeatPassword}
+              onChange={(e) => setRepeatPassword(e.target.value)}
+            />
+          </div>
+          
+          {error && (
+            <div className="p-3 bg-destructive/10 border border-destructive/20 text-destructive text-[10px] font-mono uppercase tracking-tight">
+              Provisioning Failure // {error}
             </div>
-            <div className="mt-4 text-center text-sm">
-              Already have an account?{" "}
-              <Link href="/auth/login" className="underline underline-offset-4">
-                Login
-              </Link>
-            </div>
-          </form>
-        </CardContent>
-      </Card>
+          )}
+
+          <Button type="submit" className="rounded-none h-12 font-mono font-bold uppercase tracking-[0.2em] group relative overflow-hidden" disabled={isLoading}>
+            <span className="relative z-10">{isLoading ? "Processing..." : "Register Credentials"}</span>
+            <div className="absolute inset-0 bg-primary/20 translate-x-[-100%] group-hover:translate-x-0 transition-transform duration-300" />
+          </Button>
+        </form>
+
+        <div className="mt-8 pt-6 border-t border-border/50 text-center">
+          <p className="text-[10px] font-mono uppercase text-muted-foreground tracking-widest">
+            Already Registered?{" "}
+            <Link href="/auth/login" className="text-primary hover:underline font-bold">
+              Access Gateway
+            </Link>
+          </p>
+        </div>
+      </div>
+      
+      <div className="flex justify-center gap-4 opacity-50">
+        <div className="w-1 h-1 bg-border" />
+        <div className="w-1 h-1 bg-primary" />
+        <div className="w-1 h-1 bg-border" />
+      </div>
     </div>
   );
 }
