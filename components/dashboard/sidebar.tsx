@@ -36,7 +36,7 @@ export function Sidebar() {
     )}>
       {/* Logo Area */}
       <div className="h-16 flex items-center px-4 border-b border-border">
-        <Link href="/dashboard" className="font-mono font-bold text-xl tracking-tighter flex items-center gap-2 group overflow-hidden">
+        <Link href="/" className="font-mono font-bold text-xl tracking-tighter flex items-center gap-2 group overflow-hidden">
           {isCollapsed ? (
             <span className="bg-primary text-primary-foreground px-2 py-0.5 uppercase tracking-[0.1em]">P</span>
           ) : (
