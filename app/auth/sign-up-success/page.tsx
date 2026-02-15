@@ -8,8 +8,8 @@ export default function Page() {
           <Link href="/" className="font-mono font-bold text-2xl tracking-tighter flex items-center gap-2 mb-2">
             <span className="bg-primary text-primary-foreground px-2 py-1">P</span>
           </Link>
-          <h1 className="text-2xl font-mono font-bold uppercase tracking-widest text-shadow-industrial text-center">Protocol Initiated</h1>
-          <p className="text-xs text-muted-foreground font-mono uppercase tracking-tight">Verification Required [P-AI-SEC-05]</p>
+          <h1 className="text-2xl font-mono font-bold uppercase tracking-widest text-shadow-industrial text-center">Registration Successful</h1>
+          <p className="text-xs text-muted-foreground font-mono uppercase tracking-tight">Please confirm your email</p>
         </div>
 
         <div className="border border-border bg-card/50 backdrop-blur-sm p-8 relative overflow-hidden text-center">
@@ -18,15 +18,15 @@ export default function Page() {
           
           <div className="flex flex-col gap-6">
             <div className="p-4 bg-primary/10 border border-primary/20 text-primary text-[10px] font-mono uppercase tracking-widest leading-relaxed">
-              Operator credentials registered. Please verify your identity via the transmission sent to your primary email address.
+              Your account has been created. Please check your email for a verification link.
             </div>
             
             <p className="text-sm text-muted-foreground font-sans tracking-tight">
-              Access to the PRIMEPOLICY-AI intelligence layer will be granted upon successful verification.
+              Once verified, you will have full access to the PRIMEPOLICY-AI platform.
             </p>
 
             <Link href="/auth/login" className="text-xs font-mono uppercase text-muted-foreground hover:text-primary transition-colors underline underline-offset-4 mt-4">
-              Return to Gateway
+              Return to Login
             </Link>
           </div>
         </div>

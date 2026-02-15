@@ -46,8 +46,8 @@ export function LoginForm({
         <Link href="/" className="font-mono font-bold text-2xl tracking-tighter flex items-center gap-2 mb-2">
           <span className="bg-primary text-primary-foreground px-2 py-1">P</span>
         </Link>
-        <h1 className="text-2xl font-mono font-bold uppercase tracking-widest text-shadow-industrial">Athentication Gateway</h1>
-        <p className="text-xs text-muted-foreground font-mono uppercase tracking-tight">Identity Verification Required [P-AI-SEC-01]</p>
+        <h1 className="text-2xl font-mono font-bold uppercase tracking-widest text-shadow-industrial">Login</h1>
+        <p className="text-xs text-muted-foreground font-mono uppercase tracking-tight">Enter your credentials to continue</p>
       </div>
 
       <div className="border border-border bg-card/50 backdrop-blur-sm p-8 relative overflow-hidden">
@@ -56,11 +56,11 @@ export function LoginForm({
         
         <form onSubmit={handleLogin} className="flex flex-col gap-6">
           <div className="flex flex-col gap-2">
-            <Label htmlFor="email" className="font-mono text-[10px] uppercase tracking-widest text-primary">Email_Address</Label>
+            <Label htmlFor="email" className="font-mono text-[10px] uppercase tracking-widest text-primary">Email</Label>
             <Input
               id="email"
               type="email"
-              placeholder="operator@primepolicy.ai"
+              placeholder="m@example.com"
               required
               className="rounded-none border-border bg-background/50 font-sans focus-visible:ring-primary"
               value={email}
@@ -69,12 +69,12 @@ export function LoginForm({
           </div>
           <div className="flex flex-col gap-2">
             <div className="flex items-center justify-between">
-              <Label htmlFor="password" className="font-mono text-[10px] uppercase tracking-widest text-primary">Access_Key</Label>
+              <Label htmlFor="password" className="font-mono text-[10px] uppercase tracking-widest text-primary">Password</Label>
               <Link
                 href="/auth/forgot-password"
                 className="text-[10px] font-mono uppercase text-muted-foreground hover:text-primary transition-colors"
               >
-                Reset Key
+                Forgot Password?
               </Link>
             </div>
             <Input
@@ -94,16 +94,16 @@ export function LoginForm({
           )}
 
           <Button type="submit" className="rounded-none h-12 font-mono font-bold uppercase tracking-[0.2em] group relative overflow-hidden" disabled={isLoading}>
-            <span className="relative z-10">{isLoading ? "Validating..." : "Initiate Access"}</span>
+            <span className="relative z-10">{isLoading ? "Signing in..." : "Sign In"}</span>
             <div className="absolute inset-0 bg-primary/20 translate-x-[-100%] group-hover:translate-x-0 transition-transform duration-300" />
           </Button>
         </form>
 
         <div className="mt-8 pt-6 border-t border-border/50 text-center">
           <p className="text-[10px] font-mono uppercase text-muted-foreground tracking-widest">
-            New Operator?{" "}
+            Don&apos;t have an account?{" "}
             <Link href="/auth/sign-up" className="text-primary hover:underline font-bold">
-              Register Credentials
+              Sign Up
             </Link>
           </p>
         </div>

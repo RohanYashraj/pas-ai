@@ -55,21 +55,21 @@ export function SignUpForm({
         <Link href="/" className="font-mono font-bold text-2xl tracking-tighter flex items-center gap-2 mb-2">
           <span className="bg-primary text-primary-foreground px-2 py-1">P</span>
         </Link>
-        <h1 className="text-2xl font-mono font-bold uppercase tracking-widest text-shadow-industrial">Operator Intake</h1>
-        <p className="text-xs text-muted-foreground font-mono uppercase tracking-tight">System Access Provisioning [P-AI-SEC-02]</p>
+        <h1 className="text-2xl font-mono font-bold uppercase tracking-widest text-shadow-industrial">Sign Up</h1>
+        <p className="text-xs text-muted-foreground font-mono uppercase tracking-tight">Create your account to get started</p>
       </div>
 
       <div className="border border-border bg-card/50 backdrop-blur-sm p-8 relative overflow-hidden">
         <div className="absolute top-0 left-0 w-full h-1 bg-primary" />
-        <div className="absolute top-0 right-0 p-2 text-[8px] font-mono text-muted-foreground/30 uppercase tracking-[0.2em]">Register // V4</div>
+        <div className="absolute top-0 right-0 p-2 text-[8px] font-mono text-muted-foreground/30 uppercase tracking-[0.2em]">New // V4</div>
         
         <form onSubmit={handleSignUp} className="flex flex-col gap-6">
           <div className="flex flex-col gap-2">
-            <Label htmlFor="email" className="font-mono text-[10px] uppercase tracking-widest text-primary">Email_Address</Label>
+            <Label htmlFor="email" className="font-mono text-[10px] uppercase tracking-widest text-primary">Email</Label>
             <Input
               id="email"
               type="email"
-              placeholder="operator@primepolicy.ai"
+              placeholder="m@example.com"
               required
               className="rounded-none border-border bg-background/50 font-sans focus-visible:ring-primary"
               value={email}
@@ -77,10 +77,11 @@ export function SignUpForm({
             />
           </div>
           <div className="flex flex-col gap-2">
-            <Label htmlFor="password" className="font-mono text-[10px] uppercase tracking-widest text-primary">Define_Access_Key</Label>
+            <Label htmlFor="password" className="font-mono text-[10px] uppercase tracking-widest text-primary">Password</Label>
             <Input
               id="password"
               type="password"
+              placeholder="Min 6 characters"
               required
               className="rounded-none border-border bg-background/50 font-sans focus-visible:ring-primary"
               value={password}
@@ -88,10 +89,11 @@ export function SignUpForm({
             />
           </div>
           <div className="flex flex-col gap-2">
-            <Label htmlFor="repeat-password" className="font-mono text-[10px] uppercase tracking-widest text-primary">Verify_Access_Key</Label>
+            <Label htmlFor="repeat-password" className="font-mono text-[10px] uppercase tracking-widest text-primary">Confirm Password</Label>
             <Input
               id="repeat-password"
               type="password"
+              placeholder="Confirm your password"
               required
               className="rounded-none border-border bg-background/50 font-sans focus-visible:ring-primary"
               value={repeatPassword}
@@ -101,21 +103,21 @@ export function SignUpForm({
           
           {error && (
             <div className="p-3 bg-destructive/10 border border-destructive/20 text-destructive text-[10px] font-mono uppercase tracking-tight">
-              Provisioning Failure // {error}
+              Error // {error}
             </div>
           )}
 
           <Button type="submit" className="rounded-none h-12 font-mono font-bold uppercase tracking-[0.2em] group relative overflow-hidden" disabled={isLoading}>
-            <span className="relative z-10">{isLoading ? "Processing..." : "Register Credentials"}</span>
+            <span className="relative z-10">{isLoading ? "Signing up..." : "Sign Up"}</span>
             <div className="absolute inset-0 bg-primary/20 translate-x-[-100%] group-hover:translate-x-0 transition-transform duration-300" />
           </Button>
         </form>
 
         <div className="mt-8 pt-6 border-t border-border/50 text-center">
           <p className="text-[10px] font-mono uppercase text-muted-foreground tracking-widest">
-            Already Registered?{" "}
+            Already have an account?{" "}
             <Link href="/auth/login" className="text-primary hover:underline font-bold">
-              Access Gateway
+              Login
             </Link>
           </p>
         </div>

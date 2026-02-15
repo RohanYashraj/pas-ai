@@ -42,8 +42,8 @@ export function UpdatePasswordForm({
         <Link href="/" className="font-mono font-bold text-2xl tracking-tighter flex items-center gap-2 mb-2">
           <span className="bg-primary text-primary-foreground px-2 py-1">P</span>
         </Link>
-        <h1 className="text-2xl font-mono font-bold uppercase tracking-widest text-shadow-industrial text-center">Security Update</h1>
-        <p className="text-xs text-muted-foreground font-mono uppercase tracking-tight">Access Key Provisioning [P-AI-SEC-04]</p>
+        <h1 className="text-2xl font-mono font-bold uppercase tracking-widest text-shadow-industrial text-center">Update Password</h1>
+        <p className="text-xs text-muted-foreground font-mono uppercase tracking-tight">Set your new password below</p>
       </div>
 
       <div className="border border-border bg-card/50 backdrop-blur-sm p-8 relative overflow-hidden">
@@ -52,7 +52,7 @@ export function UpdatePasswordForm({
         
         <form onSubmit={handleUpdatePassword} className="flex flex-col gap-6">
           <div className="flex flex-col gap-2">
-            <Label htmlFor="password" className="font-mono text-[10px] uppercase tracking-widest text-primary">New_Access_Key</Label>
+            <Label htmlFor="password" className="font-mono text-[10px] uppercase tracking-widest text-primary">New Password</Label>
             <Input
               id="password"
               type="password"
@@ -66,12 +66,12 @@ export function UpdatePasswordForm({
           
           {error && (
             <div className="p-3 bg-destructive/10 border border-destructive/20 text-destructive text-[10px] font-mono uppercase tracking-tight">
-              Update Failure // {error}
+              Error // {error}
             </div>
           )}
 
           <Button type="submit" className="rounded-none h-12 font-mono font-bold uppercase tracking-[0.2em] group relative overflow-hidden" disabled={isLoading}>
-            <span className="relative z-10">{isLoading ? "Applying..." : "Finalize Key Update"}</span>
+            <span className="relative z-10">{isLoading ? "Saving..." : "Save Password"}</span>
             <div className="absolute inset-0 bg-primary/20 translate-x-[-100%] group-hover:translate-x-0 transition-transform duration-300" />
           </Button>
         </form>
