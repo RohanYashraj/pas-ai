@@ -51,4 +51,4 @@ The application will be available at [http://localhost:3000](http://localhost:30
 
 ## Auth Protocol
 
-The system uses Clerk for identity management. Routes under `/dashboard` are protected by `middleware.ts`. Authentication persists across client and server environments.
+The system uses Clerk for identity management. Routes under `/dashboard` are protected by `proxy.ts`. Authentication persists across client and server environments.
