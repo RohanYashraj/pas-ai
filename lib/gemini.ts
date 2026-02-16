@@ -32,6 +32,7 @@ export async function generateContent(prompt: string, modelName = "gemini-3-pro-
  * Generates structured JSON output from Gemini using a schema-following prompt.
  */
 export async function generateStructuredOutput<T>(prompt: string, schemaDescription: string): Promise<T> {
+    console.log("[GEMINI] Generating structured output...");
     const model = genAI.getGenerativeModel({
         model: "gemini-3-pro-preview",
         generationConfig: {
@@ -46,13 +47,13 @@ export async function generateStructuredOutput<T>(prompt: string, schemaDescript
     ${schemaDescription}
   `;
 
-    const result = await model.generateContent(fullPrompt);
-    const text = result.response.text();
-
     try {
+        const result = await model.generateContent(fullPrompt);
+        const text = result.response.text();
+        console.log("[GEMINI] Response received");
         return JSON.parse(text) as T;
-    } catch (error) {
-        console.error("Failed to parse Gemini JSON output:", text);
-        throw new Error("Invalid JSON returned from Gemini");
+    } catch (error: any) {
+        console.error("[GEMINI] Error or Parse Failure:", error.message);
+        throw new Error(`Gemini failed: ${error.message}`);
     }
 }

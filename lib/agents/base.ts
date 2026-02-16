@@ -24,7 +24,9 @@ export abstract class BaseAgent {
      * Helper to retrieve relevant context from the vector store for a specific query.
      */
     protected async getContext(query: string, limit = 5) {
+        console.log(`[AGENT] Getting context for: ${query}`);
         const results = await searchDocumentSections(query, limit);
+        console.log(`[AGENT] Found ${results.length} relevant sections`);
         return results.map(r => r.content).join("\n\n---\n\n");
     }
 
@@ -40,6 +42,9 @@ export abstract class BaseAgent {
       ${prompt}
     `;
 
-        return generateStructuredOutput<T>(fullPrompt, schema);
+        console.log(`[AGENT] Starting extraction with prompt: ${prompt.substring(0, 50)}...`);
+        const result = await generateStructuredOutput<T>(fullPrompt, schema);
+        console.log(`[AGENT] Extraction complete`);
+        return result;
     }
 }
