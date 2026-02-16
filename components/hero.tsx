@@ -1,12 +1,11 @@
-import { createClient } from "@/lib/supabase/server";
+import { auth } from "@clerk/nextjs/server";
 import { Button } from "./ui/button";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 
 export async function Hero() {
-  const supabase = await createClient();
-  const { data } = await supabase.auth.getClaims();
-  const user = data?.claims;
+  const { userId } = await auth();
+  const user = userId;
 
   return (
     <div className="flex flex-col gap-12 items-center py-20 relative overflow-hidden">
@@ -28,18 +27,10 @@ export async function Hero() {
         </p>
 
         <div className="mt-8 flex flex-col items-center gap-6">
-          {user ? (
+          {user && (
             <Button asChild size="lg" className="rounded-none font-mono font-bold uppercase tracking-[0.2em] px-8 h-14 text-sm group relative overflow-hidden">
               <Link href="/dashboard" className="flex items-center gap-3">
-                <span className="relative z-10">Access Dashboard</span>
-                <ArrowRight className="w-4 h-4 relative z-10 group-hover:translate-x-1 transition-transform" />
-                <div className="absolute inset-0 bg-primary-foreground/10 translate-x-[-100%] group-hover:translate-x-0 transition-transform duration-300" />
-              </Link>
-            </Button>
-          ) : (
-            <Button asChild size="lg" className="rounded-none font-mono font-bold uppercase tracking-[0.2em] px-8 h-14 text-sm group relative overflow-hidden">
-              <Link href="/auth/login" className="flex items-center gap-3">
-                <span className="relative z-10">Initialize Intake</span>
+                <span className="relative z-10">Access Application</span>
                 <ArrowRight className="w-4 h-4 relative z-10 group-hover:translate-x-1 transition-transform" />
                 <div className="absolute inset-0 bg-primary-foreground/10 translate-x-[-100%] group-hover:translate-x-0 transition-transform duration-300" />
               </Link>
