@@ -1,7 +1,12 @@
 import { MetadataAgent } from "./metadata";
 import { CoverageAgent } from "./coverages";
+import { ExclusionsAgent } from "./exclusions";
+import { EligibilityAgent } from "./eligibility";
+import { DefinitionsAgent } from "./definitions";
+import { ClaimsAgent } from "./claims";
 import { addDocumentSections, clearDocumentSections } from "../vector-store";
 import { BaseAgent, AgentResponse } from "./base";
+import { MASTER_SCHEMA } from "./schema";
 
 export class AgentOrchestrator {
     private agents: BaseAgent[] = [];
@@ -10,6 +15,10 @@ export class AgentOrchestrator {
         this.agents = [
             new MetadataAgent(),
             new CoverageAgent(),
+            new ExclusionsAgent(),
+            new EligibilityAgent(),
+            new DefinitionsAgent(),
+            new ClaimsAgent(),
         ];
     }
 
@@ -17,12 +26,11 @@ export class AgentOrchestrator {
      * Phase 1: Intake - Parses, chunks, and indexes the document.
      */
     public async ingestDocument(buffer: Buffer, fileName: string) {
-        // 1. Parse PDF using the new PDFParse class API (version 2.4.x+)
+        // ... (existing ingestion code remains same)
         console.log(`[ORCHESTRATOR] Starting ingestion for: ${fileName}`);
 
         let pdfData;
         try {
-            // Use require to handle CJS/ESM interop in Next.js
             const mod = require("pdf-parse");
             const PDFParseClass = mod.PDFParse || mod.default?.PDFParse;
 
@@ -45,21 +53,11 @@ export class AgentOrchestrator {
         }
 
         let text = pdfData.text || "";
-        if (!text) {
-            console.warn("[ORCHESTRATOR] No text extracted from PDF");
-        }
-
-        // 1.5 Sanitize text: Remove null characters (\u0000) which break PostgreSQL text/jsonb columns
         text = text.replace(/\u0000/g, "");
 
-        // 2. Clear old sections for this file (POC behavior)
         await clearDocumentSections(fileName);
-
-        // 3. Semantic Chunking (Simple implementation)
-        // In a real RAG, we'd use section headers. Here we split by double newlines & paragraphs.
         const chunks = this.semanticChunk(text);
 
-        // 4. Index Chunks
         const sections = chunks.map((content, index) => ({
             content,
             metadata: {
@@ -80,18 +78,38 @@ export class AgentOrchestrator {
     /**
      * Phase 2: Extraction - Runs all agents to build structured artefacts.
      */
-    public async executeExtraction(documentId: string): Promise<AgentResponse[]> {
+    public async executeExtraction(documentId: string): Promise<any> {
+        console.log(`[ORCHESTRATOR] Starting multi-agent extraction for: ${documentId}`);
         const results = await Promise.all(
             this.agents.map(agent => agent.run(documentId))
         );
-        return results;
+
+        // Initialize with default empty values from MASTER_SCHEMA to ensure fixed structure
+        const consolidatedData: any = {
+            product_metadata: { ...MASTER_SCHEMA.product_metadata },
+            coverages: [],
+            exclusions: [],
+            eligibility_territory: { ...MASTER_SCHEMA.eligibility_territory },
+            definitions: [],
+            claims_procedures: { ...MASTER_SCHEMA.claims_procedures },
+        };
+
+        // Merge results from each agent
+        results.forEach(res => {
+            if (res.status === "success" && res.data) {
+                Object.assign(consolidatedData, res.data);
+            } else {
+                console.warn(`[ORCHESTRATOR] Agent ${res.agentName} failed or returned no data: ${res.message}`);
+            }
+        });
+
+        return consolidatedData;
     }
 
     /**
      * Simple semantic chunker that respects paragraph boundaries.
      */
     private semanticChunk(text: string): string[] {
-        // Split by common insurance spec delimiters: headers or double newlines
         const paragraphs = text.split(/\n\n+/);
         const chunks: string[] = [];
         let currentChunk = "";
