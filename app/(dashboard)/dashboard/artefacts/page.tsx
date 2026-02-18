@@ -70,7 +70,7 @@ export default function ArtefactsPage() {
             variant="outline"
             size="sm"
             onClick={handleExport}
-            className="rounded-none font-mono text-[10px] uppercase tracking-widest h-10 px-6 hover:bg-primary/10 transition-colors"
+            className="rounded-none font-mono text-[10px] uppercase tracking-widest h-10 px-6 transition-all duration-300"
           >
             <Download className="w-3 h-3 mr-2" />
             Export Spec
