@@ -10,7 +10,7 @@ export default function ArtefactsPage() {
   const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
-    const storedResults = localStorage.getItem("extraction_results");
+    const storedResults = sessionStorage.getItem("extraction_results");
     if (storedResults) {
       try {
         setResults(JSON.parse(storedResults));

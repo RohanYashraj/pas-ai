@@ -15,9 +15,9 @@ export function IntakeUploader() {
   const [logs, setLogs] = useState<{ time: string, message: string }[]>([]);
   const [persistedFileName, setPersistedFileName] = useState<string | null>(null);
 
-  // Load state from localStorage on mount
+  // Load state from sessionStorage on mount
   useEffect(() => {
-    const saved = localStorage.getItem("intake_state");
+    const saved = sessionStorage.getItem("intake_state");
     if (saved) {
       try {
         const state = JSON.parse(saved);
@@ -49,7 +49,7 @@ export function IntakeUploader() {
 
     // Only persist if there's actually something to save
     if (status !== "idle" || logs.length > 0 || file) {
-      localStorage.setItem("intake_state", JSON.stringify(state));
+      sessionStorage.setItem("intake_state", JSON.stringify(state));
     }
   }, [status, progress, logs, results, file, persistedFileName]);
 
@@ -135,8 +135,8 @@ export function IntakeUploader() {
       addLog("REDIRECTION PROTOCOL ENGAGED // T-MINUS 2S");
 
       // Store results for Analysis/Artefacts pages
-      localStorage.setItem("extraction_results", JSON.stringify(data.extraction));
-      localStorage.setItem("extraction_filename", file.name);
+      sessionStorage.setItem("extraction_results", JSON.stringify(data.extraction));
+      sessionStorage.setItem("extraction_filename", file.name);
 
       setResults(data);
       setStatus("complete");
@@ -257,7 +257,7 @@ export function IntakeUploader() {
                       setProgress(0);
                       setLogs([]);
                       setPersistedFileName(null);
-                      localStorage.removeItem("intake_state");
+                      sessionStorage.removeItem("intake_state");
                     }}
                     className="rounded-none font-mono uppercase tracking-[0.2em] px-8 h-12 border-primary/20 hover:bg-primary/5 hover:border-primary/40 transition-all"
                   >
@@ -283,7 +283,7 @@ export function IntakeUploader() {
                       setLogs([]);
                       setFile(null);
                       setPersistedFileName(null);
-                      localStorage.removeItem("intake_state");
+                      sessionStorage.removeItem("intake_state");
                     }}
                     className="rounded-none font-mono uppercase tracking-[0.2em] px-10 h-12 border-destructive/20 hover:bg-destructive/5 hover:border-destructive/40 transition-all"
                   >
