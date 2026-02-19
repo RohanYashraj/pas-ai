@@ -259,7 +259,7 @@ export function IntakeUploader() {
                       setPersistedFileName(null);
                       sessionStorage.removeItem("intake_state");
                     }}
-                    className="rounded-none font-mono uppercase tracking-[0.2em] px-8 h-12 border-primary/20 hover:bg-primary/5 hover:border-primary/40 transition-all"
+                    className="rounded-none font-mono uppercase tracking-[0.2em] px-8 h-10 border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground transition-all duration-300"
                   >
                     Reset Terminal
                   </Button>
@@ -285,7 +285,7 @@ export function IntakeUploader() {
                       setPersistedFileName(null);
                       sessionStorage.removeItem("intake_state");
                     }}
-                    className="rounded-none font-mono uppercase tracking-[0.2em] px-10 h-12 border-destructive/20 hover:bg-destructive/5 hover:border-destructive/40 transition-all"
+                    className="rounded-none font-mono uppercase tracking-[0.2em] px-10 h-10 border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground transition-all duration-300"
                   >
                     Retry Protocol
                   </Button>
